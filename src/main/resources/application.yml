@@ -1,0 +1,11 @@
+server:
+  port: 8082
+#logging:
+#  pattern:
+#    console: "%d - %msg%n"
+#  path: /var/log/tomcat/
+#  file: /var/log/tomcat/sell.log
+#  level:
+#    com.heaven.LoggerTest: debug
+
+

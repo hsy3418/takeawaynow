@@ -7,6 +7,7 @@ import com.heaven.VO.ProductCategoryVO;
 import com.heaven.VO.ResultVO;
 import com.heaven.dataobject.ProductCategory;
 import com.heaven.dataobject.ProductInfo;
+import com.heaven.util.ResultVOUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,6 +53,7 @@ public class BuyerProductController {
              for(ProductInfo productInfo:productInfoList){
                  if (productInfo.getCategoryType().equals(productCategory.getCategoryType())){
                      ProductInfoVO productInfoVO =  new ProductInfoVO();
+                     //copy the propertyies of the first object to the second one.
                      BeanUtils.copyProperties(productInfo,productInfoVO);
                      productInfoVOList.add(productInfoVO);
                  }
@@ -60,11 +62,8 @@ public class BuyerProductController {
              productCategoryVOList.add(productCategoryVO);
          }
 
-        ResultVO resultVO = new ResultVO();
-        resultVO.setCode(0);
-        resultVO.setMsg("success");
-        ProductInfoVO productInfoVO = new ProductInfoVO();
-        resultVO.setData(productCategoryVOList);
-        return resultVO;
+
+
+        return ResultVOUtil.success(productCategoryVOList);
     }
 }

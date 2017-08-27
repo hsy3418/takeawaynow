@@ -184,12 +184,61 @@ public class OrderMasterServiceImpl implements OrderMasterService {
     }
 
     @Override
+    @Transactional
     public OrderDTO finish(OrderDTO orderDTO) {
-        return null;
+
+
+        if(!orderDTO.getOrderStatus().equals(OrderStatusEnum.newOrder.getStatusCode())){
+            log.error("[finish order] not corret ,orderId={},orderStatus={}",orderDTO.getOrderId(),orderDTO.getOrderStatus());
+            throw new SellException(ResultEnum.ORDER_STATUS_ERROR);
+
+        }
+
+        if(!orderDTO.getPayStatus().equals(PayStatusEnum.wait.getStatusCode())){
+            log.error("[finish order] not corret ,orderId={},orderStatus={}",orderDTO.getOrderId(),orderDTO.getOrderStatus());
+            throw new SellException(ResultEnum.PAY_STATUS_ERROR);
+        }
+        //change order status
+        OrderMaster orderMaster = new OrderMaster();
+
+
+        orderDTO.setOrderStatus(OrderStatusEnum.oldOrder.getStatusCode());
+        BeanUtils.copyProperties(orderDTO,orderMaster);
+       OrderMaster updateResult =  orderMasterRepository.save(orderMaster);
+       if(updateResult==null){
+           log.error("[finished order] failed orderMaster={}",orderMaster);
+           throw new SellException(ResultEnum.ORDER_UPDATE_FAIL);
+       }
+        return orderDTO;
+
     }
 
     @Override
+    @Transactional
     public OrderDTO paid(OrderDTO orderDTO) {
-        return null;
+        if(!orderDTO.getOrderStatus().equals(OrderStatusEnum.oldOrder.getStatusCode())){
+            log.error("[finish order] not corret ,orderId={},orderStatus={}",orderDTO.getOrderId(),orderDTO.getOrderStatus());
+            throw new SellException(ResultEnum.ORDER_STATUS_ERROR);
+
+        }
+
+        if(!orderDTO.getPayStatus().equals(PayStatusEnum.wait.getStatusCode())){
+            log.error("[finish order] not corret ,orderId={},orderStatus={}",orderDTO.getOrderId(),orderDTO.getOrderStatus());
+            throw new SellException(ResultEnum.PAY_STATUS_ERROR);
+        }
+        //change order status
+        OrderMaster orderMaster = new OrderMaster();
+
+        orderDTO.setPayStatus(PayStatusEnum.paid.getStatusCode());
+        //change pay status
+
+        BeanUtils.copyProperties(orderDTO,orderMaster);
+        OrderMaster updateResult =  orderMasterRepository.save(orderMaster);
+        if(updateResult==null){
+            log.error("[finished order] failed orderMaster={}",orderMaster);
+            throw new SellException(ResultEnum.ORDER_UPDATE_FAIL);
+        }
+        return orderDTO;
+
     }
 }

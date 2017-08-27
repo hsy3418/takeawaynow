@@ -75,4 +75,20 @@ public class OrderMasterServiceImplTest {
 
     }
 
+    @Test
+    public void finish() throws Exception{
+        OrderDTO orderDTO = orderMasterService.findOne("111111");
+        OrderDTO result = orderMasterService.finish(orderDTO);
+        Assert.assertEquals(OrderStatusEnum.oldOrder.getStatusCode(),result.getOrderStatus());
+
+    }
+
+    @Test
+    public void paid() throws Exception{
+        OrderDTO orderDTO = orderMasterService.findOne("111111");
+        OrderDTO result = orderMasterService.paid(orderDTO);
+        Assert.assertEquals(PayStatusEnum.paid.getStatusCode(),result.getPayStatus());
+
+
+    }
 }

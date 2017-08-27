@@ -9,6 +9,7 @@ import lombok.Getter;
 public enum PayStatusEnum {
 
     unpaid(0,"unpaid"),
+    wait(2,"wait"),
     paid(1,"paid");
 
     private Integer statusCode;

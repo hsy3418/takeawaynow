@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -55,11 +56,22 @@ public class OrderMasterServiceImplTest {
     @Test
     public void save() throws Exception {
         OrderDTO orderMaster = new OrderDTO();
-        orderMaster.setOrderId("111112");
+        orderMaster.setOrderId("111113");
         orderMaster.setBuyerName("Heaven");
         orderMaster.setBuyerPhone("0416817115");
         orderMaster.setBuyerAddress("10 vistion street");
         orderMaster.setBuyerOpenid("abc123");
+        ArrayList<OrderDetail> orderDetailArrayList = new ArrayList<>();
+        OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setDetailId("1234533");
+        orderDetail.setOrderId("111111");
+        orderDetail.setProductId("1111112");
+        orderDetail.setProductName("congee");
+        orderDetail.setProductPrice(new BigDecimal(1.2));
+        orderDetail.setProductQuantity(2);
+        orderDetail.setProductIcon("http://xxx");
+        orderDetailArrayList.add(orderDetail);
+        orderMaster.setOrderDetailList(orderDetailArrayList);
         orderMaster.setOrderAmount(new BigDecimal(10.0));
         orderMaster.setOrderStatus(OrderStatusEnum.newOrder.getStatusCode());
         orderMaster.setPayStatus(PayStatusEnum.unpaid.getStatusCode());

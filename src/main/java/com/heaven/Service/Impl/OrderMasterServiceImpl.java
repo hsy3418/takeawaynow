@@ -108,7 +108,7 @@ public class OrderMasterServiceImpl implements OrderMasterService {
             }
 
             //2.calculate the total price
-           orderAmount= order.getProductPrice().
+           orderAmount= productInfo.getProductPrice().
                     multiply(new BigDecimal(order.getProductQuantity())).add(orderAmount);
 
             //3.put into database(orderMaster orderDetail)
@@ -117,17 +117,22 @@ public class OrderMasterServiceImpl implements OrderMasterService {
             BeanUtils.copyProperties(productInfo,order);
             orderDetailRepository.save(order);
 
-
-
+            
 
         }
 
 
         //create order master
+
+        orderDTO.setOrderId(orderId);
         OrderMaster orderMaster = new OrderMaster();
-        orderMaster.setOrderId(orderId);
-        orderMaster.setOrderAmount(orderAmount);
         BeanUtils.copyProperties(orderDTO,orderMaster);
+
+        orderMaster.setOrderStatus(OrderStatusEnum.newOrder.getStatusCode());
+        orderMaster.setPayStatus(PayStatusEnum.unpaid.getStatusCode());
+
+        orderMaster.setOrderAmount(orderAmount);
+
         orderMasterRepository.save(orderMaster);
 
 

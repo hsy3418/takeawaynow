@@ -21,6 +21,11 @@ public enum ResultEnum  {
     ORDER_UPDATE_FAIL(15,"fail to update order"),
     ORDER_DETAIL_EMPTY(16,"there is no order detail"),
 
+
+    PARAM_ERROR(1,"parameters not corret"),
+
+    CART_EMPTY(18,"the cart is empty"),
+
     PAY_STATUS_ERROR(17,"there is error in pay status");
 
     private Integer code;

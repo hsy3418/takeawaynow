@@ -3,6 +3,7 @@ package com.heaven.repository;
 import com.heaven.dataobject.OrderMaster;
 import com.heaven.enums.OrderStatusEnum;
 import com.heaven.enums.PayStatusEnum;
+import org.aspectj.weaver.ast.Or;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +31,7 @@ public class OrderMasterRepositoryTest {
     @Test
     public void save(){
         OrderMaster orderMaster = new OrderMaster();
-        orderMaster.setOrderId("111111");
+        orderMaster.setOrderId("111113");
         orderMaster.setBuyerName("Heaven");
         orderMaster.setBuyerPhone("0416817115");
         orderMaster.setBuyerAddress("10 vistion street");
@@ -42,6 +43,11 @@ public class OrderMasterRepositoryTest {
         Assert.assertNotNull(result);
     }
 
+    @Test
+    public void findOne(){
+        OrderMaster orderMaster = orderMasterRepository.findOne("111111");
+        Assert.assertNotNull(orderMaster);
+    }
 
     @Test
     public void findByBuyerOpenid() throws Exception{

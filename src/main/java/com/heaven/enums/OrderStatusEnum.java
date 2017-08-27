@@ -9,7 +9,8 @@ import lombok.Getter;
 public enum OrderStatusEnum {
 
     newOrder(0,"new order"),
-    oldOrder(1,"old order");
+    oldOrder(1,"old order"),
+    CANCEL_ORDER(2,"cancel order");
 
     private Integer statusCode;
 
